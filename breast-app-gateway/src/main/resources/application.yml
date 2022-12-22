@@ -1,0 +1,21 @@
+
+server:
+  port: 9090
+
+spring:
+  application:
+    name: breast-app-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: places
+          uri: http://localhost:8090/
+          predicates:
+            - Path=/places/**
+
+endpoints:
+  web:
+    exposure:
+      include: "*"
+
+
