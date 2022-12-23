@@ -15,6 +15,11 @@ public class RatingDbMockRepository implements RatingRepository {
         return Optional.of(PlaceRatingGlobalDto.builder().placeId(id).ratings(createRatings(id)).build());
     }
 
+    @Override
+    public boolean save(final PlaceRatingDto placeRatingDto) {
+        return true;
+    }
+
     private List<PlaceRatingDto> createRatings(String id) {
         List<PlaceRatingDto> list = new ArrayList<>();
         int nElements = new Random().nextInt(15) + 1;

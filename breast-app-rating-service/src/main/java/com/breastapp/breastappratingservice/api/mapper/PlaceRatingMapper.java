@@ -13,4 +13,5 @@ import org.mapstruct.NullValueMappingStrategy;
 public interface PlaceRatingMapper {
 
     PlaceRating toApiModel(final PlaceRatingDto placeRatingDto);
+    PlaceRatingDto toDtoModel(final PlaceRating placeRating);
 }
