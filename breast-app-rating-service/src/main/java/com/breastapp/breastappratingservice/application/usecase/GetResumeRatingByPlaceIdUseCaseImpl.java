@@ -1,20 +1,21 @@
 package com.breastapp.breastappratingservice.application.usecase;
 
-import com.breastapp.breastappratingservice.application.usecase.interfaces.UseCase;
+import com.breastapp.breastappratingservice.application.usecase.interfaces.GetResumeRatingByPlaceIdUseCase;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingResumeDto;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 
 import java.util.Optional;
 
-public class GetResumeRatingByPlaceIdUseCase implements UseCase {
+public class GetResumeRatingByPlaceIdUseCaseImpl implements GetResumeRatingByPlaceIdUseCase {
 
     private final RatingRepository ratingRepository;
 
-    public GetResumeRatingByPlaceIdUseCase(RatingRepository ratingRepository) {
+    public GetResumeRatingByPlaceIdUseCaseImpl(RatingRepository ratingRepository) {
         this.ratingRepository = ratingRepository;
     }
 
+    @Override
     public Optional<PlaceRatingResumeDto> execute(final String id) {
         Optional<PlaceRatingGlobalDto> rating = ratingRepository.getRatingByPlaceId(id);
         return rating.map(r -> createResume(r));

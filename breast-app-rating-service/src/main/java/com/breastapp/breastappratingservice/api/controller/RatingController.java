@@ -4,9 +4,10 @@ import com.breastapp.breastappratingservice.api.mapper.PlaceRatingGlobalMapper;
 import com.breastapp.breastappratingservice.api.mapper.PlaceRatingResumeMapper;
 import com.breastapp.breastappratingservice.api.model.PlaceRatingGlobal;
 import com.breastapp.breastappratingservice.api.model.PlaceRatingResume;
-import com.breastapp.breastappratingservice.application.usecase.GetCompleteRatingByPlaceIdUseCase;
-import com.breastapp.breastappratingservice.application.usecase.GetResumeRatingByPlaceIdUseCase;
+import com.breastapp.breastappratingservice.application.usecase.interfaces.GetCompleteRatingByPlaceIdUseCase;
+import com.breastapp.breastappratingservice.application.usecase.interfaces.GetResumeRatingByPlaceIdUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +17,11 @@ import reactor.core.publisher.Mono;
 public class RatingController {
 
     @Autowired
+    @Qualifier("GetResumeRatingByPlaceIdUseCaseImpl")
     private GetResumeRatingByPlaceIdUseCase getResumeRatingByPlaceIdUseCase;
 
     @Autowired
+    @Qualifier("GetCompleteRatingByPlaceIdUseCaseImpl")
     private GetCompleteRatingByPlaceIdUseCase getCompleteRatingByPlaceIdUseCase;
 
     @Autowired
