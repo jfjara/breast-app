@@ -12,6 +12,10 @@ spring:
           uri: http://localhost:8090/
           predicates:
             - Path=/places/**
+        - id: ratings
+          uri: http://localhost:8091/
+          predicates:
+            - Path=/rating/**
 
 endpoints:
   web:
