@@ -18,5 +18,6 @@ public class PlaceDto {
     private String postalCode;
     private String typeService;
     private List<ServiceDtoEnum> services;
+    private PlaceRatingResumeDto resume;
 
 }
