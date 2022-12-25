@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UseCaseConfig {
 
-    private static Logger logger = LoggerFactory.getLogger(UseCaseConfig.class);
+    private static final Logger logger = LoggerFactory.getLogger(UseCaseConfig.class);
 
     @Bean("GetCompleteRatingByPlaceIdUseCaseImpl")
     public GetCompleteRatingByPlaceIdUseCase getCompleteRatingByPlaceIdUseCase(

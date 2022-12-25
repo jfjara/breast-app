@@ -13,11 +13,11 @@ import reactor.core.publisher.Mono;
 public class ErrorHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PlaceNotFoundException.class)
-    public Mono<ResponseEntity<CustomError>> handlePlaceNotFoundException(Exception ex) {
+    public Mono<ResponseEntity<CustomError>> handlePlaceNotFoundException(final Exception ex) {
         return Mono.just(new ResponseEntity<>(createCustomError(1, ex.getMessage()), HttpStatus.NOT_FOUND));
     }
 
-    private CustomError createCustomError(int internalCode, String message) {
+    private CustomError createCustomError(final int internalCode, final String message) {
         return new CustomError(internalCode, message);
     }
 }
