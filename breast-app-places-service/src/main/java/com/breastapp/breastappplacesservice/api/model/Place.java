@@ -20,5 +20,6 @@ public class Place {
     private String postalCode;
     private String typeService;
     private List<ServiceEnum> services;
+    private PlaceRatingResume resume;
 
 }
