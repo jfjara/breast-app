@@ -71,7 +71,6 @@ public class RatingController {
         return Mono.just(createRatingForPlaceUseCase.execute(placeRatingMapper.toDtoModel(placeRating)) ?
                 new ResponseEntity<>(HttpStatus.CREATED) :
                 new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
-
     }
 
 }
