@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
 @RestController
 public class RatingController {
 
-    private static Logger logger = LoggerFactory.getLogger(RatingController.class);
+    private static final Logger logger = LoggerFactory.getLogger(RatingController.class);
 
     @Autowired
     @Qualifier("GetResumeRatingByPlaceIdUseCaseImpl")
@@ -49,9 +49,9 @@ public class RatingController {
     public Mono<PlaceRatingResume> getPlaceResume(@PathVariable final String id) {
         logger.info("GET /rating/resume/{}", id);
         return Mono.just(
-                getResumeRatingByPlaceIdUseCase.execute(id)
-                        .map(r -> placeRatingResumeMapper.toApiModel(r))
-                        .orElse(null)
+                placeRatingResumeMapper.toApiModel(
+                        getResumeRatingByPlaceIdUseCase.execute(id)
+                )
         );
     }
 
@@ -59,9 +59,9 @@ public class RatingController {
     public Mono<PlaceRatingGlobal> getCompleteRating(@PathVariable final String id) {
         logger.info("GET /rating/{}", id);
         return Mono.just(
-                getCompleteRatingByPlaceIdUseCase.execute(id)
-                        .map(r -> placeRatingGlobalMapper.toApiModel(r))
-                        .orElse(null)
+                placeRatingGlobalMapper.toApiModel(
+                        getCompleteRatingByPlaceIdUseCase.execute(id)
+                )
         );
     }
 
@@ -69,8 +69,7 @@ public class RatingController {
     public Mono<ResponseEntity<HttpStatus>> createRating(@RequestBody final PlaceRating placeRating) {
         logger.info("POST /rating {}", placeRating.toString());
         return Mono.just(createRatingForPlaceUseCase.execute(placeRatingMapper.toDtoModel(placeRating)) ?
-                new ResponseEntity<>(HttpStatus.CREATED) :
-                new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+                new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)
+        );
     }
-
 }

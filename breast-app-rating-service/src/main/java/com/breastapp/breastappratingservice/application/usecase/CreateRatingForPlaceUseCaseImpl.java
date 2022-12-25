@@ -2,13 +2,14 @@ package com.breastapp.breastappratingservice.application.usecase;
 
 import com.breastapp.breastappratingservice.application.usecase.interfaces.CreateRatingForPlaceUseCase;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
+import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotStoredException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CreateRatingForPlaceUseCaseImpl implements CreateRatingForPlaceUseCase {
 
-    private static Logger logger = LoggerFactory.getLogger(CreateRatingForPlaceUseCaseImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(CreateRatingForPlaceUseCaseImpl.class);
 
     private final RatingRepository ratingRepository;
 
@@ -17,8 +18,12 @@ public class CreateRatingForPlaceUseCaseImpl implements CreateRatingForPlaceUseC
     }
 
     @Override
-    public boolean execute(final PlaceRatingDto placeRating) {
+    public boolean execute(final PlaceRatingDto placeRating) throws RatingPlaceNotStoredException{
         logger.info("Create new rating {}", placeRating);
-        return ratingRepository.save(placeRating);
+        if (!ratingRepository.save(placeRating)) {
+            logger.error("Error saving place rating {}", placeRating);
+            throw new RatingPlaceNotStoredException(placeRating);
+        }
+        return true;
     }
 }

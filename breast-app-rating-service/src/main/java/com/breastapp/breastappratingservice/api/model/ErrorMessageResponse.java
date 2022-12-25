@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlaceRating {
+public class ErrorMessageResponse {
 
-    private String id;
-    private String placeId;
-    private double rating;
-    private PlaceComment placeComment;
+    private int code;
+    private String message;
 
 }

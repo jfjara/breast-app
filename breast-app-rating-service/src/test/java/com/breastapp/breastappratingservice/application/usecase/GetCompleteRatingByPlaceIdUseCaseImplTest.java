@@ -25,8 +25,8 @@ public class GetCompleteRatingByPlaceIdUseCaseImplTest {
     @Test
     public void get_complete_rating_test() {
         Mockito.when(ratingRepository.getRatingByPlaceId(Mockito.anyString())).thenReturn(MockUtils.getRatingByPlaceId("id"));
-        Optional<PlaceRatingGlobalDto> result = getCompleteRatingByPlaceIdUseCase.execute("id");
-        Assertions.assertTrue(result.isPresent());
+        PlaceRatingGlobalDto result = getCompleteRatingByPlaceIdUseCase.execute("id");
+        Assertions.assertNotNull(result);
     }
 
 }
