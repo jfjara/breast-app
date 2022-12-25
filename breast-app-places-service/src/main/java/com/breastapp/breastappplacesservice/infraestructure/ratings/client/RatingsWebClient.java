@@ -1,6 +1,7 @@
 package com.breastapp.breastappplacesservice.infraestructure.ratings.client;
 
 import com.breastapp.breastappplacesservice.infraestructure.ratings.model.PlaceRatingResumeEntity;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,10 +19,11 @@ public class RatingsWebClient {
     @Value("${breastapp.services.ratings.resume.endpoint}")
     private String resumeEndpoint;
 
-    private final WebClient webClient;
+    private WebClient webClient;
 
-    public RatingsWebClient(final WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl(gatewayUrl)
+    @PostConstruct
+    public void init() {
+        this.webClient = WebClient.builder().baseUrl(gatewayUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
                 .build();
