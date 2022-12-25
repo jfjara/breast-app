@@ -6,7 +6,7 @@ import com.breastapp.breastappratingservice.application.usecase.GetResumeRatingB
 import com.breastapp.breastappratingservice.application.usecase.interfaces.CreateRatingForPlaceUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetCompleteRatingByPlaceIdUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetResumeRatingByPlaceIdUseCase;
-import com.breastapp.breastappratingservice.infraestructure.ratingdbmock.repository.RatingDbMockRepository;
+import com.breastapp.breastappratingservice.infraestructure.mongodb.repository.RatingMongoDbRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -19,21 +19,21 @@ public class UseCaseConfig {
 
     @Bean("GetCompleteRatingByPlaceIdUseCaseImpl")
     public GetCompleteRatingByPlaceIdUseCase getCompleteRatingByPlaceIdUseCase(
-            final RatingDbMockRepository ratingRepository) {
+            final RatingMongoDbRepository ratingRepository) {
         logger.info("Create bean for usecase GetCompleteRatingByPlaceIdUseCaseImpl");
         return new GetCompleteRatingByPlaceIdUseCaseImpl(ratingRepository);
     }
 
     @Bean("GetResumeRatingByPlaceIdUseCaseImpl")
     public GetResumeRatingByPlaceIdUseCase getResumeRatingByPlaceIdUseCase(
-            final RatingDbMockRepository ratingRepository) {
+            final RatingMongoDbRepository ratingRepository) {
         logger.info("Create bean for usecase GetResumeRatingByPlaceIdUseCaseImpl");
         return new GetResumeRatingByPlaceIdUseCaseImpl(ratingRepository);
     }
 
     @Bean("CreateRatingForPlaceUseCaseImpl")
     public CreateRatingForPlaceUseCase createRatingForPlaceUseCase(
-            final RatingDbMockRepository ratingRepository) {
+            final RatingMongoDbRepository ratingRepository) {
         logger.info("Create bean for usecase CreateRatingForPlaceUseCaseImpl");
         return new CreateRatingForPlaceUseCaseImpl(ratingRepository);
     }

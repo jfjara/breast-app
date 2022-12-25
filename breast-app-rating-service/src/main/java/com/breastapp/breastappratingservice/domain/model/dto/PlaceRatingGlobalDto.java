@@ -22,13 +22,16 @@ public class PlaceRatingGlobalDto {
     private List<PlaceRatingDto> ratings;
 
     public double getRating() {
-        return ratings.stream().mapToDouble(r -> r.getRating()).sum() / ratings.size();
+        return ratings != null && !ratings.isEmpty() ?
+            ratings.stream().mapToDouble(r -> r.getRating()).sum() / ratings.size() :
+                0d;
     }
 
     public Optional<PlaceRatingDto> getMostPopularRating() {
-        return Optional.ofNullable(
-                Collections.max(ratings, Comparator.comparing(c -> c.getPlaceComment() != null ? c.getPlaceComment().getLikes() : 0))
-        );
+        return ratings != null && !ratings.isEmpty() ? Optional.ofNullable(
+                Collections.max(ratings, Comparator.comparing(c -> c.getPlaceComment() != null ? c.getPlaceComment().getLikes() : 0))) :
+                Optional.empty();
+
     }
 
 }
