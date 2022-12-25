@@ -20,6 +20,12 @@ public class ResumeRatingPlaceWebClientRepository implements GetResumeRatingPlac
 
     @Override
     public Optional<PlaceRatingResumeDto> getResumeRatingOfPlace(final String placeId) {
-        return Optional.ofNullable(mapper.toModelDto(client.getResume(placeId)));
+        try {
+            var resume = client.getResume(placeId);
+            return Optional.ofNullable(mapper.toModelDto(resume));
+        } catch (Exception e) {
+            return Optional.empty();
+            //todo ver si elevar excepcion para que muestre que no se han podido obtener o dejarla vacia
+        }
     }
 }

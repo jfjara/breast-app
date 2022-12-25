@@ -1,2 +1,10 @@
 server:
   port: 8090
+
+breastapp:
+  services:
+    gateway:
+      url: "http://localhost:9090"
+    ratings:
+      resume:
+        endpoint: "/rating/resume/{placeId}"
