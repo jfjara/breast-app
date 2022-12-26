@@ -2,6 +2,7 @@ package com.breastapp.breastappratingservice.infraestructure.mongodb.repository;
 
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
+import com.breastapp.breastappratingservice.domain.model.dto.TypeOfRatingsEnumDto;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.db.RatingsMongoDbClientRepository;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.mapper.PlaceRatingDocumentMapper;
@@ -36,6 +37,13 @@ public class RatingMongoDbRepository implements RatingRepository {
     }
 
     @Override
+    public Optional<PlaceRatingDto> getRatingByPlaceIdAndRatingId(final String placeId, final String ratingId) {
+        logger.info("Find rating for placeId {} and ratingId {}", placeId, ratingId);
+        var rating = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
+        return Optional.ofNullable(placeRatingDocumentMapper.toModelDto(rating));
+    }
+
+    @Override
     public boolean save(final PlaceRatingDto placeRatingDto) {
         logger.info("Save new place rating {}", placeRatingDto);
         try {
@@ -48,4 +56,20 @@ public class RatingMongoDbRepository implements RatingRepository {
             return false;
         }
     }
+
+    @Override
+    public void addLikeOrDislikeByPlaceIdAndRatingId(
+            final String placeId,
+            final String ratingId,
+            final TypeOfRatingsEnumDto type) {
+        logger.info("Update ratingId {} with {}", ratingId, type);
+        var rating = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
+        switch (type) {
+            case LIKE -> rating.addLike();
+            case DISLIKE -> rating.addDislike();
+        }
+        clientRepository.save(rating);
+    }
+
+
 }

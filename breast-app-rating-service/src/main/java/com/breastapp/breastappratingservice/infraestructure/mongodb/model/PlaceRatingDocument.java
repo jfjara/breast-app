@@ -16,4 +16,16 @@ public class PlaceRatingDocument {
     private double rating;
     private PlaceCommentDocument placeComment;
 
+    public void addLike() {
+        if (placeComment != null) {
+            placeComment.addLike();
+        }
+    }
+
+    public void addDislike() {
+        if (placeComment != null) {
+            placeComment.addDislike();
+        }
+    }
+
 }

@@ -13,4 +13,7 @@ public interface RatingsMongoDbClientRepository extends MongoRepository<PlaceRat
     @Query("{placeId:'?0'}")
     List<PlaceRatingDocument> findItemByPlaceId(final String placeId);
 
+    @Query("{placeId:'?0', id:'?1'}")
+    PlaceRatingDocument findItemByPlaceIdAndRatingId(final String placeId, final String ratingId);
+
 }
