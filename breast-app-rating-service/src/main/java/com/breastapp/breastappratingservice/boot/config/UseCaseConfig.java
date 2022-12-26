@@ -1,14 +1,9 @@
 package com.breastapp.breastappratingservice.boot.config;
 
-import com.breastapp.breastappratingservice.application.usecase.AddLikeOrDislikeToCommentForPlaceUseCaseImpl;
-import com.breastapp.breastappratingservice.application.usecase.CreateRatingForPlaceUseCaseImpl;
-import com.breastapp.breastappratingservice.application.usecase.GetCompleteRatingByPlaceIdUseCaseImpl;
-import com.breastapp.breastappratingservice.application.usecase.GetResumeRatingByPlaceIdUseCaseImpl;
-import com.breastapp.breastappratingservice.application.usecase.interfaces.AddLikeOrDislikeToCommentForPlaceUseCase;
-import com.breastapp.breastappratingservice.application.usecase.interfaces.CreateRatingForPlaceUseCase;
-import com.breastapp.breastappratingservice.application.usecase.interfaces.GetCompleteRatingByPlaceIdUseCase;
-import com.breastapp.breastappratingservice.application.usecase.interfaces.GetResumeRatingByPlaceIdUseCase;
+import com.breastapp.breastappratingservice.application.usecase.*;
+import com.breastapp.breastappratingservice.application.usecase.interfaces.*;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.repository.RatingMongoDbRepository;
+import com.breastapp.breastappratingservice.infraestructure.rabbitmq.repository.SendInteractionRabbitMQRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -42,9 +37,15 @@ public class UseCaseConfig {
 
     @Bean("AddLikeOrDislikeToCommentForPlaceUseCaseImpl")
     public AddLikeOrDislikeToCommentForPlaceUseCase addLikeOrDislikeToCommentForPlaceUseCase(
-            final RatingMongoDbRepository ratingMongoDbRepository) {
+            final SendInteractionRabbitMQRepository sendInteractionRabbitMQRepository) {
         logger.info("Create bean for usecase AddLikeOrDislikeToCommentForPlaceUseCaseImpl");
-        return new AddLikeOrDislikeToCommentForPlaceUseCaseImpl(ratingMongoDbRepository);
+        return new AddLikeOrDislikeToCommentForPlaceUseCaseImpl(sendInteractionRabbitMQRepository);
+    }
+
+    @Bean("UpdateInteractionUseCaseImpl")
+    public UpdateInteractionUseCase updateInteractionUseCase(final RatingMongoDbRepository repository) {
+        logger.info("Create bean for usecase UpdateInteractionUseCaseImpl");
+        return new UpdateInteractionUseCaseImpl(repository);
     }
 
 }

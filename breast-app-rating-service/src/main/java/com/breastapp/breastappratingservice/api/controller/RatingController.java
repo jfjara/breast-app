@@ -6,9 +6,11 @@ import com.breastapp.breastappratingservice.api.mapper.PlaceRatingResumeMapper;
 import com.breastapp.breastappratingservice.api.model.PlaceRating;
 import com.breastapp.breastappratingservice.api.model.PlaceRatingGlobal;
 import com.breastapp.breastappratingservice.api.model.PlaceRatingResume;
+import com.breastapp.breastappratingservice.application.usecase.interfaces.AddLikeOrDislikeToCommentForPlaceUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.CreateRatingForPlaceUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetCompleteRatingByPlaceIdUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetResumeRatingByPlaceIdUseCase;
+import com.breastapp.breastappratingservice.domain.model.dto.TypeOfRatingsEnumDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,10 @@ public class RatingController {
     @Autowired
     @Qualifier("CreateRatingForPlaceUseCaseImpl")
     private CreateRatingForPlaceUseCase createRatingForPlaceUseCase;
+
+    @Autowired
+    @Qualifier("AddLikeOrDislikeToCommentForPlaceUseCaseImpl")
+    private AddLikeOrDislikeToCommentForPlaceUseCase addLikeOrDislikeToCommentForPlaceUseCase;
 
     @Autowired
     private PlaceRatingGlobalMapper placeRatingGlobalMapper;
@@ -71,6 +77,22 @@ public class RatingController {
         return Mono.just(createRatingForPlaceUseCase.execute(placeRatingMapper.toDtoModel(placeRating)) ?
                 new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)
         );
+    }
+
+    @PutMapping(value = "/rating/{ratingId}/place/{placeId}/like")
+    public ResponseEntity<HttpStatus> like(
+            @PathVariable final String ratingId,
+            @PathVariable final String placeId) {
+        addLikeOrDislikeToCommentForPlaceUseCase.execute(placeId, ratingId, TypeOfRatingsEnumDto.LIKE);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping(value = "/rating/{ratingId}/place/{placeId}/dislike")
+    public ResponseEntity<HttpStatus> dislike(
+            @PathVariable final String ratingId,
+            @PathVariable final String placeId) {
+        addLikeOrDislikeToCommentForPlaceUseCase.execute(placeId, ratingId, TypeOfRatingsEnumDto.DISLIKE);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 }
