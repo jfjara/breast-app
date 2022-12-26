@@ -1,8 +1,10 @@
 package com.breastapp.breastappratingservice.boot.config;
 
+import com.breastapp.breastappratingservice.application.usecase.AddLikeOrDislikeToCommentForPlaceUseCaseImpl;
 import com.breastapp.breastappratingservice.application.usecase.CreateRatingForPlaceUseCaseImpl;
 import com.breastapp.breastappratingservice.application.usecase.GetCompleteRatingByPlaceIdUseCaseImpl;
 import com.breastapp.breastappratingservice.application.usecase.GetResumeRatingByPlaceIdUseCaseImpl;
+import com.breastapp.breastappratingservice.application.usecase.interfaces.AddLikeOrDislikeToCommentForPlaceUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.CreateRatingForPlaceUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetCompleteRatingByPlaceIdUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetResumeRatingByPlaceIdUseCase;
@@ -37,4 +39,12 @@ public class UseCaseConfig {
         logger.info("Create bean for usecase CreateRatingForPlaceUseCaseImpl");
         return new CreateRatingForPlaceUseCaseImpl(ratingRepository);
     }
+
+    @Bean("AddLikeOrDislikeToCommentForPlaceUseCaseImpl")
+    public AddLikeOrDislikeToCommentForPlaceUseCase addLikeOrDislikeToCommentForPlaceUseCase(
+            final RatingMongoDbRepository ratingMongoDbRepository) {
+        logger.info("Create bean for usecase AddLikeOrDislikeToCommentForPlaceUseCaseImpl");
+        return new AddLikeOrDislikeToCommentForPlaceUseCaseImpl(ratingMongoDbRepository);
+    }
+
 }

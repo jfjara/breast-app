@@ -18,4 +18,11 @@ public class PlaceCommentDocument {
     private int likes;
     private int dislikes;
 
+    public void addLike() {
+        likes++;
+    }
+
+    public void addDislike() {
+        dislikes++;
+    }
 }

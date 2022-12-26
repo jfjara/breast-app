@@ -72,4 +72,5 @@ public class RatingController {
                 new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)
         );
     }
+
 }
