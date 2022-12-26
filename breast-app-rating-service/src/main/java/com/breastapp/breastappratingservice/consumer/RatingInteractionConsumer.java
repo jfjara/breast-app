@@ -24,7 +24,7 @@ public class RatingInteractionConsumer {
 
 
     @RabbitHandler
-    public void receiver(final RatingInteractionOrderDto order) {
+    public void receiver(final RatingInteractionOrder order) {
         logger.info("Add like/dislike listener invoked - Consuming Message with order : {}", order.toString());
         updateInteractionUseCase.execute(order.getPlaceId(), order.getRatingId(), order.getType());
     }
