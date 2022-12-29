@@ -64,18 +64,15 @@ public class RatingMongoDbRepository implements RatingRepository {
             final String ratingId,
             final FeedbackDto feedback) {
         logger.info("Update ratingId {} with feedback {}", ratingId, feedback);
-        var ratingToUpdateFeedback = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
-        addLikeOrDislikeToRating(ratingToUpdateFeedback, feedback);
-        clientRepository.save(ratingToUpdateFeedback);
+        var rating = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
+        addFeedbackToRating(rating, feedback);
+        clientRepository.save(rating);
     }
 
-    private void addLikeOrDislikeToRating(
+    private void addFeedbackToRating(
             PlaceRatingDocument placeRatingDocument,
             final FeedbackDto feedback) {
-        switch (feedback) {
-            case LIKE -> placeRatingDocument.addLike();
-            case DISLIKE -> placeRatingDocument.addDislike();
-        }
+        placeRatingDocument.addFeedback(feedback);
     }
 
 
