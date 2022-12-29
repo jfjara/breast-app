@@ -3,7 +3,6 @@ package com.breastapp.breastappplacesservice.api.controller;
 import com.breastapp.breastappplacesservice.api.mapper.PlaceMapper;
 import com.breastapp.breastappplacesservice.api.model.Place;
 import com.breastapp.breastappplacesservice.application.usecase.repository.FindPlaceByIdUseCase;
-import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
