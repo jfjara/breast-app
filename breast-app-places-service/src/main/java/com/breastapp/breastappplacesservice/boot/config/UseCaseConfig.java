@@ -1,19 +1,28 @@
 package com.breastapp.breastappplacesservice.boot.config;
 
 import com.breastapp.breastappplacesservice.application.usecase.FindPlaceByIdUseCaseImpl;
+import com.breastapp.breastappplacesservice.application.usecase.GetResumeAndSetToPlaceUseCaseImpl;
 import com.breastapp.breastappplacesservice.application.usecase.repository.FindPlaceByIdUseCase;
+import com.breastapp.breastappplacesservice.application.usecase.repository.GetResumeAndSetToPlaceUseCase;
+import com.breastapp.breastappplacesservice.domain.repository.GetPlaceRatingResumeRepository;
 import com.breastapp.breastappplacesservice.infraestructure.mock.FindPlacesMockRepository;
-import com.breastapp.breastappplacesservice.infraestructure.ratings.repository.GetPlaceRatingResumeWebClientRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class UseCaseConfig {
 
-    @Bean
+    @Bean(value = "FindPlaceByIdUseCaseImpl")
     public FindPlaceByIdUseCase findPlaceByIdUseCase(
             final FindPlacesMockRepository findPlacesMockRepository,
-            final GetPlaceRatingResumeWebClientRepository resumeRatingPlaceWebClientRepository) {
-        return new FindPlaceByIdUseCaseImpl(findPlacesMockRepository, resumeRatingPlaceWebClientRepository);
+            final GetResumeAndSetToPlaceUseCase getResumeAndSetToPlaceUseCase) {
+        return new FindPlaceByIdUseCaseImpl(findPlacesMockRepository, getResumeAndSetToPlaceUseCase);
     }
+
+    @Bean(value = "GetResumeAndSetToPlaceUseCaseImpl")
+    public GetResumeAndSetToPlaceUseCase getResumeAndSetToPlaceUseCase(
+            final GetPlaceRatingResumeRepository getPlaceRatingResumeRepository) {
+        return new GetResumeAndSetToPlaceUseCaseImpl(getPlaceRatingResumeRepository);
+    }
+
 }
