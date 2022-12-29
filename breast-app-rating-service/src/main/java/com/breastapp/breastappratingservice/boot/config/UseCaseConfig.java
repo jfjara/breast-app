@@ -3,7 +3,7 @@ package com.breastapp.breastappratingservice.boot.config;
 import com.breastapp.breastappratingservice.application.usecase.*;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.*;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.repository.RatingMongoDbRepository;
-import com.breastapp.breastappratingservice.infraestructure.rabbitmq.repository.SendInteractionRabbitMQRepository;
+import com.breastapp.breastappratingservice.infraestructure.rabbitmq.repository.SendFeedbackRabbitMQRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -14,11 +14,11 @@ public class UseCaseConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(UseCaseConfig.class);
 
-    @Bean("GetCompleteRatingByPlaceIdUseCaseImpl")
-    public GetCompleteRatingByPlaceIdUseCase getCompleteRatingByPlaceIdUseCase(
+    @Bean("GetGlobalRatingByPlaceIdUseCaseImpl")
+    public GetGlobalRatingByPlaceIdUseCase getCompleteRatingByPlaceIdUseCase(
             final RatingMongoDbRepository ratingRepository) {
-        logger.info("Create bean for usecase GetCompleteRatingByPlaceIdUseCaseImpl");
-        return new GetCompleteRatingByPlaceIdUseCaseImpl(ratingRepository);
+        logger.info("Create bean for usecase GetGlobalRatingByPlaceIdUseCaseImpl");
+        return new GetGlobalRatingByPlaceIdUseCaseImpl(ratingRepository);
     }
 
     @Bean("GetResumeRatingByPlaceIdUseCaseImpl")
@@ -35,17 +35,17 @@ public class UseCaseConfig {
         return new CreateRatingForPlaceUseCaseImpl(ratingRepository);
     }
 
-    @Bean("AddLikeOrDislikeToCommentForPlaceUseCaseImpl")
-    public AddLikeOrDislikeToCommentForPlaceUseCase addLikeOrDislikeToCommentForPlaceUseCase(
-            final SendInteractionRabbitMQRepository sendInteractionRabbitMQRepository) {
-        logger.info("Create bean for usecase AddLikeOrDislikeToCommentForPlaceUseCaseImpl");
-        return new AddLikeOrDislikeToCommentForPlaceUseCaseImpl(sendInteractionRabbitMQRepository);
+    @Bean("AddFeedbackToCommentForPlaceUseCaseImpl")
+    public AddFeedbackToCommentForPlaceUseCase addFeedbackToCommentForPlaceUseCase(
+            final SendFeedbackRabbitMQRepository sendInteractionRabbitMQRepository) {
+        logger.info("Create bean for usecase AddFeedbackToCommentForPlaceUseCaseImpl");
+        return new AddFeedbackToCommentForPlaceUseCaseImpl(sendInteractionRabbitMQRepository);
     }
 
-    @Bean("UpdateInteractionUseCaseImpl")
-    public UpdateInteractionUseCase updateInteractionUseCase(final RatingMongoDbRepository repository) {
-        logger.info("Create bean for usecase UpdateInteractionUseCaseImpl");
-        return new UpdateInteractionUseCaseImpl(repository);
+    @Bean("UpdateFeedbackRatingUseCaseImpl")
+    public UpdateFeedbackRatingUseCase updateInteractionUseCase(final RatingMongoDbRepository repository) {
+        logger.info("Create bean for usecase UpdateFeedbackRatingUseCaseImpl");
+        return new UpdateFeedbackRatingUseCaseImpl(repository);
     }
 
 }

@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RatingInteractionProducer {
+public class FeedbackRatingProducer {
 
-    private static final Logger logger = LoggerFactory.getLogger(RatingInteractionProducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(FeedbackRatingProducer.class);
 
     @Autowired
     @Qualifier("customRabbitTemplate")

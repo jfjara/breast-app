@@ -6,11 +6,11 @@ import com.breastapp.breastappratingservice.api.mapper.PlaceRatingResumeMapper;
 import com.breastapp.breastappratingservice.api.model.PlaceRating;
 import com.breastapp.breastappratingservice.api.model.PlaceRatingGlobal;
 import com.breastapp.breastappratingservice.api.model.PlaceRatingResume;
-import com.breastapp.breastappratingservice.application.usecase.interfaces.AddLikeOrDislikeToCommentForPlaceUseCase;
+import com.breastapp.breastappratingservice.application.usecase.interfaces.AddFeedbackToCommentForPlaceUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.CreateRatingForPlaceUseCase;
-import com.breastapp.breastappratingservice.application.usecase.interfaces.GetCompleteRatingByPlaceIdUseCase;
+import com.breastapp.breastappratingservice.application.usecase.interfaces.GetGlobalRatingByPlaceIdUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetResumeRatingByPlaceIdUseCase;
-import com.breastapp.breastappratingservice.domain.model.dto.TypeOfRatingsEnumDto;
+import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +31,16 @@ public class RatingController {
     private GetResumeRatingByPlaceIdUseCase getResumeRatingByPlaceIdUseCase;
 
     @Autowired
-    @Qualifier("GetCompleteRatingByPlaceIdUseCaseImpl")
-    private GetCompleteRatingByPlaceIdUseCase getCompleteRatingByPlaceIdUseCase;
+    @Qualifier("GetGlobalRatingByPlaceIdUseCaseImpl")
+    private GetGlobalRatingByPlaceIdUseCase getGlobalRatingByPlaceIdUseCase;
 
     @Autowired
     @Qualifier("CreateRatingForPlaceUseCaseImpl")
     private CreateRatingForPlaceUseCase createRatingForPlaceUseCase;
 
     @Autowired
-    @Qualifier("AddLikeOrDislikeToCommentForPlaceUseCaseImpl")
-    private AddLikeOrDislikeToCommentForPlaceUseCase addLikeOrDislikeToCommentForPlaceUseCase;
+    @Qualifier("AddFeedbackToCommentForPlaceUseCaseImpl")
+    private AddFeedbackToCommentForPlaceUseCase addFeedbackToCommentForPlaceUseCase;
 
     @Autowired
     private PlaceRatingGlobalMapper placeRatingGlobalMapper;
@@ -51,7 +51,7 @@ public class RatingController {
     @Autowired
     private PlaceRatingMapper placeRatingMapper;
 
-    @GetMapping(value = "/rating/resume/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/ratings/resume/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<PlaceRatingResume> getPlaceResume(@PathVariable final String id) {
         logger.info("GET /rating/resume/{}", id);
         return Mono.just(
@@ -61,17 +61,17 @@ public class RatingController {
         );
     }
 
-    @GetMapping(value = "/rating/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/ratings/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<PlaceRatingGlobal> getCompleteRating(@PathVariable final String id) {
         logger.info("GET /rating/{}", id);
         return Mono.just(
                 placeRatingGlobalMapper.toApiModel(
-                        getCompleteRatingByPlaceIdUseCase.execute(id)
+                        getGlobalRatingByPlaceIdUseCase.execute(id)
                 )
         );
     }
 
-    @PostMapping(value = "/rating", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/ratings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<HttpStatus>> createRating(@RequestBody final PlaceRating placeRating) {
         logger.info("POST /rating {}", placeRating.toString());
         return Mono.just(createRatingForPlaceUseCase.execute(placeRatingMapper.toDtoModel(placeRating)) ?
@@ -83,7 +83,7 @@ public class RatingController {
     public ResponseEntity<HttpStatus> like(
             @PathVariable final String ratingId,
             @PathVariable final String placeId) {
-        addLikeOrDislikeToCommentForPlaceUseCase.execute(placeId, ratingId, TypeOfRatingsEnumDto.LIKE);
+        addFeedbackToCommentForPlaceUseCase.execute(placeId, ratingId, FeedbackDto.LIKE);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
@@ -91,7 +91,7 @@ public class RatingController {
     public ResponseEntity<HttpStatus> dislike(
             @PathVariable final String ratingId,
             @PathVariable final String placeId) {
-        addLikeOrDislikeToCommentForPlaceUseCase.execute(placeId, ratingId, TypeOfRatingsEnumDto.DISLIKE);
+        addFeedbackToCommentForPlaceUseCase.execute(placeId, ratingId, FeedbackDto.DISLIKE);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 

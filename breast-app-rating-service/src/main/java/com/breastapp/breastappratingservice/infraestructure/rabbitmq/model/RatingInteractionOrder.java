@@ -1,6 +1,6 @@
 package com.breastapp.breastappratingservice.infraestructure.rabbitmq.model;
 
-import com.breastapp.breastappratingservice.domain.model.dto.TypeOfRatingsEnumDto;
+import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +16,6 @@ public class RatingInteractionOrder implements Serializable {
 
     private String placeId;
     private String ratingId;
-    private TypeOfRatingsEnumDto type;
+    private FeedbackDto feedback;
 
 }

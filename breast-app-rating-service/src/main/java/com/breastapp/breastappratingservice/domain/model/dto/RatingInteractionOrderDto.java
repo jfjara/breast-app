@@ -15,6 +15,6 @@ public class RatingInteractionOrderDto implements Serializable {
 
     private String placeId;
     private String ratingId;
-    private TypeOfRatingsEnumDto type;
+    private FeedbackDto type;
 
 }
