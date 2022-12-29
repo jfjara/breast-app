@@ -3,7 +3,7 @@ package com.breastapp.breastappplacesservice.infraestructure.mock;
 import com.breastapp.breastappplacesservice.domain.model.dto.CoordinateDto;
 import com.breastapp.breastappplacesservice.domain.model.dto.PlaceDto;
 import com.breastapp.breastappplacesservice.domain.model.dto.ServiceDtoEnum;
-import com.breastapp.breastappplacesservice.domain.repository.FindPlacesRepository;
+import com.breastapp.breastappplacesservice.domain.repository.PlacesRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class FindPlacesMockRepository implements FindPlacesRepository {
+public class FindPlacesMockRepository implements PlacesRepository {
 
     @Override
     public Optional<PlaceDto> findPlaceById(final String id) {

@@ -4,8 +4,8 @@ import com.breastapp.breastappplacesservice.domain.model.dto.PlaceRatingResumeDt
 
 import java.util.Optional;
 
-public interface GetResumeRatingPlaceRepository {
+public interface GetPlaceRatingResumeRepository {
 
-    Optional<PlaceRatingResumeDto> getResumeRatingOfPlace(final String placeId);
+    Optional<PlaceRatingResumeDto> getPlaceRatingResumeById(final String placeId);
 
 }

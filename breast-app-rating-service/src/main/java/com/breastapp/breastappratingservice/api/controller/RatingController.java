@@ -53,7 +53,7 @@ public class RatingController {
 
     @GetMapping(value = "/ratings/resume/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<PlaceRatingResume> getPlaceResume(@PathVariable final String id) {
-        logger.info("GET /rating/resume/{}", id);
+        logger.info("GET /ratings/resume/{}", id);
         return Mono.just(
                 placeRatingResumeMapper.toApiModel(
                         getResumeRatingByPlaceIdUseCase.execute(id)
@@ -63,7 +63,7 @@ public class RatingController {
 
     @GetMapping(value = "/ratings/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<PlaceRatingGlobal> getCompleteRating(@PathVariable final String id) {
-        logger.info("GET /rating/{}", id);
+        logger.info("GET /ratings/{}", id);
         return Mono.just(
                 placeRatingGlobalMapper.toApiModel(
                         getGlobalRatingByPlaceIdUseCase.execute(id)
@@ -73,13 +73,13 @@ public class RatingController {
 
     @PostMapping(value = "/ratings", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Mono<ResponseEntity<HttpStatus>> createRating(@RequestBody final PlaceRating placeRating) {
-        logger.info("POST /rating {}", placeRating.toString());
+        logger.info("POST /ratings {}", placeRating.toString());
         return Mono.just(createRatingForPlaceUseCase.execute(placeRatingMapper.toDtoModel(placeRating)) ?
                 new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)
         );
     }
 
-    @PutMapping(value = "/rating/{ratingId}/place/{placeId}/like")
+    @PutMapping(value = "/ratings/{ratingId}/place/{placeId}/like")
     public ResponseEntity<HttpStatus> like(
             @PathVariable final String ratingId,
             @PathVariable final String placeId) {
@@ -87,7 +87,7 @@ public class RatingController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @PutMapping(value = "/rating/{ratingId}/place/{placeId}/dislike")
+    @PutMapping(value = "/ratings/{ratingId}/place/{placeId}/dislike")
     public ResponseEntity<HttpStatus> dislike(
             @PathVariable final String ratingId,
             @PathVariable final String placeId) {
