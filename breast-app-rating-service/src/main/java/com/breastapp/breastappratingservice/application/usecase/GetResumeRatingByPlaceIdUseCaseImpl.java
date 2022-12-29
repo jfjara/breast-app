@@ -8,8 +8,6 @@ import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
-
 public class GetResumeRatingByPlaceIdUseCaseImpl implements GetResumeRatingByPlaceIdUseCase {
 
     private static final Logger logger = LoggerFactory.getLogger(GetResumeRatingByPlaceIdUseCaseImpl.class);
@@ -22,8 +20,10 @@ public class GetResumeRatingByPlaceIdUseCaseImpl implements GetResumeRatingByPla
     @Override
     public PlaceRatingResumeDto execute(final String placeId) {
         logger.info("Retrieve a resume rating for place id {}", placeId);
-        Optional<PlaceRatingGlobalDto> rating = ratingRepository.getRatingByPlaceId(placeId);
-        return rating.map(r -> createResume(r)).orElseThrow(() -> new RatingPlaceNotFoundException(placeId));
+        var globalRating = ratingRepository.getGlobalRatingByPlaceId(placeId);
+        return globalRating.map(r -> createResume(r))
+                .orElseThrow(() ->
+                        new RatingPlaceNotFoundException(placeId));
     }
 
     private PlaceRatingResumeDto createResume(final PlaceRatingGlobalDto rating) {
@@ -31,7 +31,9 @@ public class GetResumeRatingByPlaceIdUseCaseImpl implements GetResumeRatingByPla
                 .globalRating(rating.getRating())
                 .placeId(rating.getPlaceId())
                 .mostPopularComment(
-                        rating.getMostPopularRating().map(r -> r.getPlaceComment()).orElse(null))
+                        rating.getMostPopularRating()
+                                .map(r -> r.getPlaceComment())
+                                .orElse(null))
                 .build();
     }
 

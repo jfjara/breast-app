@@ -1,12 +1,13 @@
 package com.breastapp.breastappratingservice.infraestructure.mongodb.repository;
 
+import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
-import com.breastapp.breastappratingservice.domain.model.dto.TypeOfRatingsEnumDto;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.db.RatingsMongoDbClientRepository;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.mapper.PlaceRatingDocumentMapper;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.mapper.PlaceRatingGlobalDocumentMapper;
+import com.breastapp.breastappratingservice.infraestructure.mongodb.model.PlaceRatingDocument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class RatingMongoDbRepository implements RatingRepository {
     private PlaceRatingDocumentMapper placeRatingDocumentMapper;
 
     @Override
-    public Optional<PlaceRatingGlobalDto> getRatingByPlaceId(final String placeId) {
+    public Optional<PlaceRatingGlobalDto> getGlobalRatingByPlaceId(final String placeId) {
         logger.info("Find Ratings for placeId {}", placeId);
         var placesRating = clientRepository.findItemByPlaceId(placeId);
         return Optional.ofNullable(placeRatingGlobalDocumentMapper.toModelDto(placeId, placesRating));
@@ -58,17 +59,23 @@ public class RatingMongoDbRepository implements RatingRepository {
     }
 
     @Override
-    public void addLikeOrDislikeByPlaceIdAndRatingId(
+    public void updateRatingFeedbackByRatingIdAndPlaceId(
             final String placeId,
             final String ratingId,
-            final TypeOfRatingsEnumDto type) {
-        logger.info("Update ratingId {} with {}", ratingId, type);
-        var rating = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
-        switch (type) {
-            case LIKE -> rating.addLike();
-            case DISLIKE -> rating.addDislike();
+            final FeedbackDto feedback) {
+        logger.info("Update ratingId {} with feedback {}", ratingId, feedback);
+        var ratingToUpdateFeedback = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
+        addLikeOrDislikeToRating(ratingToUpdateFeedback, feedback);
+        clientRepository.save(ratingToUpdateFeedback);
+    }
+
+    private void addLikeOrDislikeToRating(
+            PlaceRatingDocument placeRatingDocument,
+            final FeedbackDto feedback) {
+        switch (feedback) {
+            case LIKE -> placeRatingDocument.addLike();
+            case DISLIKE -> placeRatingDocument.addDislike();
         }
-        clientRepository.save(rating);
     }
 
 

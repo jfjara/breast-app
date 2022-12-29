@@ -1,8 +1,6 @@
 package com.breastapp.breastappratingservice.consumer;
 
-import com.breastapp.breastappratingservice.application.usecase.interfaces.AddLikeOrDislikeToCommentForPlaceUseCase;
-import com.breastapp.breastappratingservice.application.usecase.interfaces.UpdateInteractionUseCase;
-import com.breastapp.breastappratingservice.domain.model.dto.RatingInteractionOrderDto;
+import com.breastapp.breastappratingservice.application.usecase.interfaces.UpdateFeedbackRatingUseCase;
 import com.breastapp.breastappratingservice.infraestructure.rabbitmq.model.RatingInteractionOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,19 +12,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RabbitListener(queues = "rabbitmq.queue", id = "listener")
-public class RatingInteractionConsumer {
+public class FeedbackRatingConsumer {
 
-    private static Logger logger = LoggerFactory.getLogger(RatingInteractionConsumer.class);
+    private static Logger logger = LoggerFactory.getLogger(FeedbackRatingConsumer.class);
 
     @Autowired
-    @Qualifier("UpdateInteractionUseCaseImpl")
-    private UpdateInteractionUseCase updateInteractionUseCase;
+    @Qualifier("UpdateFeedbackRatingUseCaseImpl")
+    private UpdateFeedbackRatingUseCase updateFeedbackRatingUseCase;
 
 
     @RabbitHandler
-    public void receiver(final RatingInteractionOrder order) {
+    public void consume(final RatingInteractionOrder order) {
         logger.info("Add like/dislike listener invoked - Consuming Message with order : {}", order.toString());
-        updateInteractionUseCase.execute(order.getPlaceId(), order.getRatingId(), order.getType());
+        updateFeedbackRatingUseCase.execute(order.getPlaceId(), order.getRatingId(), order.getFeedback());
     }
 
 }

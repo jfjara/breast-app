@@ -11,8 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
 @ExtendWith(MockitoExtension.class)
 public class GetCompleteRatingByPlaceIdUseCaseImplTest {
 
@@ -20,11 +18,11 @@ public class GetCompleteRatingByPlaceIdUseCaseImplTest {
     RatingRepository ratingRepository;
 
     @InjectMocks
-    GetCompleteRatingByPlaceIdUseCaseImpl getCompleteRatingByPlaceIdUseCase;
+    GetGlobalRatingByPlaceIdUseCaseImpl getCompleteRatingByPlaceIdUseCase;
 
     @Test
     public void get_complete_rating_test() {
-        Mockito.when(ratingRepository.getRatingByPlaceId(Mockito.anyString())).thenReturn(MockUtils.getRatingByPlaceId("id"));
+        Mockito.when(ratingRepository.getGlobalRatingByPlaceId(Mockito.anyString())).thenReturn(MockUtils.getRatingByPlaceId("id"));
         PlaceRatingGlobalDto result = getCompleteRatingByPlaceIdUseCase.execute("id");
         Assertions.assertNotNull(result);
     }
