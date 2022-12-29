@@ -1,5 +1,6 @@
 package com.breastapp.breastappratingservice.infraestructure.mongodb.model;
 
+import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,13 +17,20 @@ public class PlaceRatingDocument {
     private double rating;
     private PlaceCommentDocument placeComment;
 
-    public void addLike() {
+    public void addFeedback(final FeedbackDto feedback) {
+        switch (feedback) {
+            case LIKE -> addLike();
+            case DISLIKE -> addDislike();
+        }
+    }
+
+    private void addLike() {
         if (placeComment != null) {
             placeComment.addLike();
         }
     }
 
-    public void addDislike() {
+    private void addDislike() {
         if (placeComment != null) {
             placeComment.addDislike();
         }
