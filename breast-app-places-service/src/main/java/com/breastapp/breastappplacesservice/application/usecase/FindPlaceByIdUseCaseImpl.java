@@ -19,10 +19,7 @@ public class FindPlaceByIdUseCaseImpl implements FindPlaceByIdUseCase {
 
     public PlaceDto execute(final String placeId) throws PlaceNotFoundException {
         var placeDto = placesRepository.findPlaceById(placeId);
-        return placeDto.map(p ->
-                    getResumeAndSetToPlaceUseCase.execute(p))
-                .orElseThrow(() ->
-                    new PlaceNotFoundException(placeId));
+        return getResumeAndSetToPlaceUseCase.execute(placeDto);
     }
 
 }

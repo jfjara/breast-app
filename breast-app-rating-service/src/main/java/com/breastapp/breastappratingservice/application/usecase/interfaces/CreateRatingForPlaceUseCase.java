@@ -5,5 +5,5 @@ import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceN
 
 public interface CreateRatingForPlaceUseCase {
 
-    boolean execute(final PlaceRatingDto placeRating) throws RatingPlaceNotStoredException;
+    void execute(final PlaceRatingDto placeRating) throws RatingPlaceNotStoredException;
 }

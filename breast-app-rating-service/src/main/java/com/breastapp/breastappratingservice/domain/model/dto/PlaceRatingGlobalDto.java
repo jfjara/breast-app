@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Getter
 @Builder(toBuilder = true)
@@ -19,12 +16,12 @@ public class PlaceRatingGlobalDto {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private double rating;
-    private List<PlaceRatingDto> ratings;
+    @Builder.Default
+    private List<PlaceRatingDto> ratings = Collections.emptyList();
 
     public double getRating() {
-        return ratings != null && !ratings.isEmpty() ?
-            ratings.stream().mapToDouble(r -> r.getRating()).sum() / ratings.size() :
-                0d;
+        return !ratings.isEmpty() ?
+            ratings.stream().mapToDouble(r -> r.getRating()).sum() / ratings.size() : 0d;
     }
 
     public Optional<PlaceRatingDto> getMostPopularRating() {

@@ -14,4 +14,8 @@ public class PlaceCommentDto {
     private int likes;
     private int dislikes;
 
+    public static PlaceCommentDto createEmptyPlaceComment() {
+        return PlaceCommentDto.builder().build();
+    }
+
 }

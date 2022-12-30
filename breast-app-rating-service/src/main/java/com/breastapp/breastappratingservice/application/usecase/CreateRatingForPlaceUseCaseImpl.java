@@ -18,12 +18,8 @@ public class CreateRatingForPlaceUseCaseImpl implements CreateRatingForPlaceUseC
     }
 
     @Override
-    public boolean execute(final PlaceRatingDto placeRating) throws RatingPlaceNotStoredException{
+    public void execute(final PlaceRatingDto placeRating) throws RatingPlaceNotStoredException {
         logger.info("Create new rating {}", placeRating);
-        if (!ratingRepository.save(placeRating)) {
-            logger.error("Error saving place rating {}", placeRating);
-            throw new RatingPlaceNotStoredException(placeRating);
-        }
-        return true;
+        ratingRepository.save(placeRating);
     }
 }

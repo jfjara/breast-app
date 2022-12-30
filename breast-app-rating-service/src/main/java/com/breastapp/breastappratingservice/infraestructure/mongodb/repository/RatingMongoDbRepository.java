@@ -3,11 +3,12 @@ package com.breastapp.breastappratingservice.infraestructure.mongodb.repository;
 import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
+import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotStoredException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.db.RatingsMongoDbClientRepository;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.mapper.PlaceRatingDocumentMapper;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.mapper.PlaceRatingGlobalDocumentMapper;
-import com.breastapp.breastappratingservice.infraestructure.mongodb.model.PlaceRatingDocument;
+import com.breastapp.breastappratingservice.infraestructure.mongodb.model.factory.PlaceRatingDocumentFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,16 +46,15 @@ public class RatingMongoDbRepository implements RatingRepository {
     }
 
     @Override
-    public boolean save(final PlaceRatingDto placeRatingDto) {
+    public void save(final PlaceRatingDto placeRatingDto) {
         logger.info("Save new place rating {}", placeRatingDto);
         try {
-            var document = placeRatingDocumentMapper.toDocument(
+            var placeRatingDocument = placeRatingDocumentMapper.toDocument(
                     UUID.randomUUID().toString(), placeRatingDto);
-            clientRepository.save(document);
-            return true;
+            clientRepository.save(placeRatingDocument);
         } catch (Exception e) {
             logger.error("Error saving a new rating {}", placeRatingDto);
-            return false;
+            throw new RatingPlaceNotStoredException(placeRatingDto);
         }
     }
 
@@ -64,16 +64,12 @@ public class RatingMongoDbRepository implements RatingRepository {
             final String ratingId,
             final FeedbackDto feedback) {
         logger.info("Update ratingId {} with feedback {}", ratingId, feedback);
-        var rating = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
-        addFeedbackToRating(rating, feedback);
-        clientRepository.save(rating);
+        var placeRating = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
+        PlaceRatingDocumentFactory.updatePlaceRatingFeedback(placeRating, feedback);
+        clientRepository.save(placeRating);
     }
 
-    private void addFeedbackToRating(
-            PlaceRatingDocument placeRatingDocument,
-            final FeedbackDto feedback) {
-        placeRatingDocument.addFeedback(feedback);
-    }
+
 
 
 }
