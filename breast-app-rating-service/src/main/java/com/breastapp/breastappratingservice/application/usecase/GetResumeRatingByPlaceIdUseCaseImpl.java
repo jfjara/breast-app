@@ -1,6 +1,8 @@
 package com.breastapp.breastappratingservice.application.usecase;
 
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetResumeRatingByPlaceIdUseCase;
+import com.breastapp.breastappratingservice.domain.model.dto.PlaceCommentDto;
+import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingResumeDto;
 import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotFoundException;
@@ -21,7 +23,7 @@ public class GetResumeRatingByPlaceIdUseCaseImpl implements GetResumeRatingByPla
     public PlaceRatingResumeDto execute(final String placeId) {
         logger.info("Retrieve a resume rating for place id {}", placeId);
         var globalRating = ratingRepository.getGlobalRatingByPlaceId(placeId);
-        return globalRating.map(r -> createResume(r))
+        return globalRating.map(this::createResume)
                 .orElseThrow(() ->
                         new RatingPlaceNotFoundException(placeId));
     }
@@ -32,8 +34,8 @@ public class GetResumeRatingByPlaceIdUseCaseImpl implements GetResumeRatingByPla
                 .placeId(rating.getPlaceId())
                 .mostPopularComment(
                         rating.getMostPopularRating()
-                                .map(r -> r.getPlaceComment())
-                                .orElse(null))
+                                .map(PlaceRatingDto::getPlaceComment)
+                                .orElse(PlaceCommentDto.createEmptyPlaceComment()))
                 .build();
     }
 

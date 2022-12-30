@@ -14,8 +14,8 @@ import java.util.UUID;
 public class FindPlacesMockRepository implements PlacesRepository {
 
     @Override
-    public Optional<PlaceDto> findPlaceById(final String id) {
-        return Optional.of(PlaceDto.builder()
+    public PlaceDto findPlaceById(final String id) {
+        return PlaceDto.builder()
                 .id(UUID.randomUUID().toString())
                 .address("Direccion inventada 1")
                 .name("Peluqueria manoli")
@@ -28,7 +28,7 @@ public class FindPlacesMockRepository implements PlacesRepository {
                         .lat(37.392529)
                         .lon(-5.994072)
                         .build())
-                .build());
+                .build();
     }
 
 }

@@ -72,11 +72,11 @@ public class RatingController {
     }
 
     @PostMapping(value = "/ratings", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<ResponseEntity<HttpStatus>> createRating(@RequestBody final PlaceRating placeRating) {
+    public ResponseEntity<HttpStatus> createRating(@RequestBody final PlaceRating placeRating) {
         logger.info("POST /ratings {}", placeRating.toString());
-        return Mono.just(createRatingForPlaceUseCase.execute(placeRatingMapper.toDtoModel(placeRating)) ?
-                new ResponseEntity<>(HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR)
-        );
+        var placeRatingDto = placeRatingMapper.toDtoModel(placeRating);
+        createRatingForPlaceUseCase.execute(placeRatingDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/ratings/{ratingId}/place/{placeId}/like")
