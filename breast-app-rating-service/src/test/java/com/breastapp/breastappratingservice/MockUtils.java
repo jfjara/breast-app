@@ -12,6 +12,17 @@ public class MockUtils {
         return Optional.of(GlobalPlaceRatingDto.builder().placeId(id).ratings(createRatings(id)).build());
     }
 
+    public static PlaceRatingDto createPlaceRating() {
+        var placeId = UUID.randomUUID().toString();
+        var ratingId = UUID.randomUUID().toString();
+        return PlaceRatingDto.builder()
+                .rating(new Random().nextInt(5) + 1)
+                .placeId(placeId)
+                .id(ratingId)
+                .placeComment(createRandomComment(placeId, ratingId))
+                .build();
+    }
+
     public static List<PlaceRatingDto> createRatings(String id) {
         List<PlaceRatingDto> list = new ArrayList<>();
         int nElements = new Random().nextInt(15) + 1;

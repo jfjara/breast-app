@@ -3,6 +3,7 @@ package com.breastapp.breastappratingservice.infraestructure.mongodb.repository;
 import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
 import com.breastapp.breastappratingservice.domain.model.dto.GlobalPlaceRatingDto;
+import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotFoundException;
 import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotStoredException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.db.RatingsMongoDbClientRepository;
@@ -42,7 +43,9 @@ public class RatingMongoDbRepository implements RatingRepository {
     public Optional<PlaceRatingDto> getPlaceRatingByPlaceIdAndRatingId(final String placeId, final String ratingId) {
         logger.info("Find rating for placeId {} and ratingId {}", placeId, ratingId);
         var rating = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
-        return Optional.ofNullable(placeRatingDocumentMapper.toModelDto(rating));
+        return Optional.ofNullable(rating
+                .map(r -> placeRatingDocumentMapper.toModelDto(r))
+                .orElse(null));
     }
 
     @Override
@@ -62,11 +65,13 @@ public class RatingMongoDbRepository implements RatingRepository {
     public void updateRatingFeedbackByRatingIdAndPlaceId(
             final String placeId,
             final String ratingId,
-            final FeedbackDto feedback) {
+            final FeedbackDto feedback) throws RatingPlaceNotFoundException {
         logger.info("Update ratingId {} with feedback {}", ratingId, feedback);
         var placeRating = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
-        PlaceRatingDocumentFactory.updatePlaceRatingFeedback(placeRating, feedback);
-        clientRepository.save(placeRating);
+        var placeRatingUpdated = placeRating
+                .map(p -> PlaceRatingDocumentFactory.updatePlaceRatingFeedback(p, feedback))
+                .orElseThrow(() -> new RatingPlaceNotFoundException(placeId));
+        clientRepository.save(placeRatingUpdated);
     }
 
 

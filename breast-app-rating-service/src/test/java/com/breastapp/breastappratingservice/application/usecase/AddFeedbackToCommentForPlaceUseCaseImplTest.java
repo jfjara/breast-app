@@ -24,10 +24,15 @@ public class AddFeedbackToCommentForPlaceUseCaseImplTest {
 
     @Test
     public void send_feedback_test() {
+        var placeId = UUID.randomUUID().toString();
+        var ratingId = UUID.randomUUID().toString();
         Mockito.doNothing().when(sendFeedbackRepository).send(Mockito.anyString(), Mockito.anyString(), Mockito.any());
 
         addFeedbackToCommentForPlaceUseCase.execute(
-                UUID.randomUUID().toString(), UUID.randomUUID().toString(), FeedbackDto.LIKE);
+                placeId, ratingId, FeedbackDto.LIKE);
+
+        Mockito.verify(sendFeedbackRepository, Mockito.times(1))
+                .send(placeId, ratingId, FeedbackDto.LIKE);
     }
 
     @Test
