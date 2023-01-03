@@ -1,7 +1,7 @@
 package com.breastapp.breastappratingservice.application.usecase;
 
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetGlobalRatingByPlaceIdUseCase;
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
+import com.breastapp.breastappratingservice.domain.model.dto.GlobalPlaceRatingDto;
 import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotFoundException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import org.slf4j.Logger;
@@ -17,9 +17,9 @@ public class GetGlobalRatingByPlaceIdUseCaseImpl implements GetGlobalRatingByPla
     }
 
     @Override
-    public PlaceRatingGlobalDto execute(final String placeId) {
+    public GlobalPlaceRatingDto execute(final String placeId) {
         logger.info("Retrieve ratings for id {}", placeId);
-        var globalRating = ratingRepository.getGlobalRatingByPlaceId(placeId);
+        var globalRating = ratingRepository.getGlobalPlaceRatingByPlaceId(placeId);
         return globalRating.orElseThrow(() ->
                         new RatingPlaceNotFoundException(placeId));
     }

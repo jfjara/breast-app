@@ -1,11 +1,11 @@
-package com.breastapp.breastappratingservice.api.controller;
+package com.breastapp.breastappratingservice.infraestructure.api.controller;
 
-import com.breastapp.breastappratingservice.api.mapper.PlaceRatingGlobalMapper;
-import com.breastapp.breastappratingservice.api.mapper.PlaceRatingMapper;
-import com.breastapp.breastappratingservice.api.mapper.PlaceRatingResumeMapper;
-import com.breastapp.breastappratingservice.api.model.PlaceRating;
-import com.breastapp.breastappratingservice.api.model.PlaceRatingGlobal;
-import com.breastapp.breastappratingservice.api.model.PlaceRatingResume;
+import com.breastapp.breastappratingservice.infraestructure.api.mapper.PlaceRatingGlobalMapper;
+import com.breastapp.breastappratingservice.infraestructure.api.mapper.PlaceRatingMapper;
+import com.breastapp.breastappratingservice.infraestructure.api.mapper.PlaceRatingResumeMapper;
+import com.breastapp.breastappratingservice.infraestructure.api.model.PlaceRating;
+import com.breastapp.breastappratingservice.infraestructure.api.model.PlaceRatingGlobal;
+import com.breastapp.breastappratingservice.infraestructure.api.model.PlaceRatingResume;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.AddFeedbackToCommentForPlaceUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.CreateRatingForPlaceUseCase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetGlobalRatingByPlaceIdUseCase;

@@ -1,7 +1,7 @@
 package com.breastapp.breastappratingservice.infraestructure.mongodb.mapper;
 
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
+import com.breastapp.breastappratingservice.domain.model.dto.GlobalPlaceRatingDto;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.model.PlaceRatingDocument;
 import org.mapstruct.*;
 
@@ -17,6 +17,6 @@ public interface PlaceRatingGlobalDocumentMapper {
 
     @Mapping(source = "placeId", target = "placeId", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
     @Mapping(source = "documents", target = "ratings", nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-    PlaceRatingGlobalDto toModelDto(final String placeId, final List<PlaceRatingDocument> documents);
+    GlobalPlaceRatingDto toModelDto(final String placeId, final List<PlaceRatingDocument> documents);
 
 }

@@ -1,6 +1,6 @@
-package com.breastapp.breastappratingservice.api.mapper;
+package com.breastapp.breastappratingservice.infraestructure.api.mapper;
 
-import com.breastapp.breastappratingservice.api.model.PlaceComment;
+import com.breastapp.breastappratingservice.infraestructure.api.model.PlaceComment;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceCommentDto;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;

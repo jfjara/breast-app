@@ -1,4 +1,4 @@
-package com.breastapp.breastappratingservice.api.model;
+package com.breastapp.breastappratingservice.infraestructure.api.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

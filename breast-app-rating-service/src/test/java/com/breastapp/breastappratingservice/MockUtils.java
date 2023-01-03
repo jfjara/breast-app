@@ -2,14 +2,14 @@ package com.breastapp.breastappratingservice;
 
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceCommentDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
+import com.breastapp.breastappratingservice.domain.model.dto.GlobalPlaceRatingDto;
 
 import java.util.*;
 
 public class MockUtils {
 
-    public static Optional<PlaceRatingGlobalDto> getRatingByPlaceId(final String id) {
-        return Optional.of(PlaceRatingGlobalDto.builder().placeId(id).ratings(createRatings(id)).build());
+    public static Optional<GlobalPlaceRatingDto> getRatingByPlaceId(final String id) {
+        return Optional.of(GlobalPlaceRatingDto.builder().placeId(id).ratings(createRatings(id)).build());
     }
 
     public static List<PlaceRatingDto> createRatings(String id) {
@@ -38,5 +38,20 @@ public class MockUtils {
                     .dislikes(new Random().nextInt(5)).build();
         }
         return null;
+    }
+
+    public static GlobalPlaceRatingDto createGlobalPlaceRating() {
+        var placeId = UUID.randomUUID().toString();
+        return GlobalPlaceRatingDto.builder()
+                .placeId(placeId)
+                .ratings(createRatings(placeId))
+                .build();
+    }
+
+    public static GlobalPlaceRatingDto createGlobalPlaceRatingWithoutComment() {
+        var placeId = UUID.randomUUID().toString();
+        return GlobalPlaceRatingDto.builder()
+                .placeId(placeId)
+                .build();
     }
 }

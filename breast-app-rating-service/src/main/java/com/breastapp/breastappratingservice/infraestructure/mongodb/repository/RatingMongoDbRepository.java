@@ -2,7 +2,7 @@ package com.breastapp.breastappratingservice.infraestructure.mongodb.repository;
 
 import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
+import com.breastapp.breastappratingservice.domain.model.dto.GlobalPlaceRatingDto;
 import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotStoredException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import com.breastapp.breastappratingservice.infraestructure.mongodb.db.RatingsMongoDbClientRepository;
@@ -32,14 +32,14 @@ public class RatingMongoDbRepository implements RatingRepository {
     private PlaceRatingDocumentMapper placeRatingDocumentMapper;
 
     @Override
-    public Optional<PlaceRatingGlobalDto> getGlobalRatingByPlaceId(final String placeId) {
+    public Optional<GlobalPlaceRatingDto> getGlobalPlaceRatingByPlaceId(final String placeId) {
         logger.info("Find Ratings for placeId {}", placeId);
         var placesRating = clientRepository.findItemByPlaceId(placeId);
         return Optional.ofNullable(placeRatingGlobalDocumentMapper.toModelDto(placeId, placesRating));
     }
 
     @Override
-    public Optional<PlaceRatingDto> getRatingByPlaceIdAndRatingId(final String placeId, final String ratingId) {
+    public Optional<PlaceRatingDto> getPlaceRatingByPlaceIdAndRatingId(final String placeId, final String ratingId) {
         logger.info("Find rating for placeId {} and ratingId {}", placeId, ratingId);
         var rating = clientRepository.findItemByPlaceIdAndRatingId(placeId, ratingId);
         return Optional.ofNullable(placeRatingDocumentMapper.toModelDto(rating));

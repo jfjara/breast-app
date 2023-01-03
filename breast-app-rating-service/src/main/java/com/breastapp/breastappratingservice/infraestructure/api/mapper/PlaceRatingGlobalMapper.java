@@ -1,9 +1,9 @@
-package com.breastapp.breastappratingservice.api.mapper;
+package com.breastapp.breastappratingservice.infraestructure.api.mapper;
 
-import com.breastapp.breastappratingservice.api.model.PlaceRating;
-import com.breastapp.breastappratingservice.api.model.PlaceRatingGlobal;
+import com.breastapp.breastappratingservice.infraestructure.api.model.PlaceRating;
+import com.breastapp.breastappratingservice.infraestructure.api.model.PlaceRatingGlobal;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
+import com.breastapp.breastappratingservice.domain.model.dto.GlobalPlaceRatingDto;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -19,5 +19,5 @@ public interface PlaceRatingGlobalMapper {
 
     @IterableMapping(nullValueMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
     List<PlaceRating> toApiModel(List<PlaceRatingDto> placeRatingsDto);
-    PlaceRatingGlobal toApiModel(final PlaceRatingGlobalDto placeRatingGlobalDto);
+    PlaceRatingGlobal toApiModel(final GlobalPlaceRatingDto placeRatingGlobalDto);
 }

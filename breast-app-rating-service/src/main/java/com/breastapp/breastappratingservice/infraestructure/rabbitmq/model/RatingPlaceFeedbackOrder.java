@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @ToString
-public class RatingInteractionOrder implements Serializable {
+public class RatingPlaceFeedbackOrder implements Serializable {
 
     private String placeId;
     private String ratingId;

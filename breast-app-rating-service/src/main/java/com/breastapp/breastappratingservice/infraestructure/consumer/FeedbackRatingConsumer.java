@@ -1,7 +1,7 @@
-package com.breastapp.breastappratingservice.consumer;
+package com.breastapp.breastappratingservice.infraestructure.consumer;
 
 import com.breastapp.breastappratingservice.application.usecase.interfaces.UpdateFeedbackRatingUseCase;
-import com.breastapp.breastappratingservice.infraestructure.rabbitmq.model.RatingInteractionOrder;
+import com.breastapp.breastappratingservice.infraestructure.rabbitmq.model.RatingPlaceFeedbackOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -22,7 +22,7 @@ public class FeedbackRatingConsumer {
 
 
     @RabbitHandler
-    public void consume(final RatingInteractionOrder order) {
+    public void consume(final RatingPlaceFeedbackOrder order) {
         logger.info("Add like/dislike listener invoked - Consuming Message with order : {}", order.toString());
         updateFeedbackRatingUseCase.execute(order.getPlaceId(), order.getRatingId(), order.getFeedback());
     }

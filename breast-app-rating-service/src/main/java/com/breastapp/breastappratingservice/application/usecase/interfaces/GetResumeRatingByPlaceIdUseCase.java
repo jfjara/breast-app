@@ -1,8 +1,8 @@
 package com.breastapp.breastappratingservice.application.usecase.interfaces;
 
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingResumeDto;
+import com.breastapp.breastappratingservice.domain.model.dto.ResumePlaceRatingDto;
 
 public interface GetResumeRatingByPlaceIdUseCase {
 
-    PlaceRatingResumeDto execute(final String id);
+    ResumePlaceRatingDto execute(final String id);
 }

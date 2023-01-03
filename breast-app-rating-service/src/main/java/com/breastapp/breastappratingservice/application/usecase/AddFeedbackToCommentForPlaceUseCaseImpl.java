@@ -2,6 +2,7 @@ package com.breastapp.breastappratingservice.application.usecase;
 
 import com.breastapp.breastappratingservice.application.usecase.interfaces.AddFeedbackToCommentForPlaceUseCase;
 import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
+import com.breastapp.breastappratingservice.domain.model.exceptions.FeedbackNotReportedException;
 import com.breastapp.breastappratingservice.domain.repository.SendFeedbackRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +18,10 @@ public class AddFeedbackToCommentForPlaceUseCaseImpl implements AddFeedbackToCom
     }
 
     @Override
-    public void execute(final String placeId, final String ratingId, final FeedbackDto feedback) {
+    public void execute(final String placeId, final String ratingId, final FeedbackDto feedback)
+            throws FeedbackNotReportedException {
         logger.info("Ready to send feedback placeId {} ratingId {} feedback {}", placeId, ratingId, feedback);
         sendFeedbackRepository.send(placeId, ratingId, feedback);
     }
+
 }

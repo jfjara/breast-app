@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder(toBuilder = true)
-public class PlaceRatingResumeDto {
+public class ResumePlaceRatingDto {
 
     private String placeId;
     private PlaceCommentDto mostPopularComment;

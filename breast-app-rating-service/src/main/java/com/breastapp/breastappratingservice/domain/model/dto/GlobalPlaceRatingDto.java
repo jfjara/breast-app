@@ -9,7 +9,7 @@ import java.util.*;
 
 @Getter
 @Builder(toBuilder = true)
-public class PlaceRatingGlobalDto {
+public class GlobalPlaceRatingDto {
 
     private String placeId;
 
@@ -21,14 +21,15 @@ public class PlaceRatingGlobalDto {
 
     public double getRating() {
         return !ratings.isEmpty() ?
-            ratings.stream().mapToDouble(r -> r.getRating()).sum() / ratings.size() : 0d;
+            ratings.stream().mapToDouble(PlaceRatingDto::getRating).sum() / ratings.size() : 0d;
     }
 
     public Optional<PlaceRatingDto> getMostPopularRating() {
-        return ratings != null && !ratings.isEmpty() ? Optional.ofNullable(
-                Collections.max(ratings, Comparator.comparing(c -> c.getPlaceComment() != null ? c.getPlaceComment().getLikes() : 0))) :
+        return !ratings.isEmpty() ?
+                Optional.ofNullable(Collections.max(ratings, Comparator.comparing(
+                        c -> c.getPlaceComment() != null ?
+                                c.getPlaceComment().getLikes() : 0))) :
                 Optional.empty();
-
     }
 
 }

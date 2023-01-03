@@ -1,4 +1,4 @@
-package com.breastapp.breastappratingservice.boot.config;
+package com.breastapp.breastappratingservice.infraestructure.springboot.config;
 
 import com.breastapp.breastappratingservice.application.usecase.*;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.*;

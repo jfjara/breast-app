@@ -1,7 +1,7 @@
-package com.breastapp.breastappratingservice.api.mapper;
+package com.breastapp.breastappratingservice.infraestructure.api.mapper;
 
-import com.breastapp.breastappratingservice.api.model.PlaceRatingResume;
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingResumeDto;
+import com.breastapp.breastappratingservice.infraestructure.api.model.PlaceRatingResume;
+import com.breastapp.breastappratingservice.domain.model.dto.ResumePlaceRatingDto;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueMappingStrategy;
@@ -12,5 +12,5 @@ import org.mapstruct.NullValueMappingStrategy;
         uses = PlaceCommentMapper.class)
 public interface PlaceRatingResumeMapper {
 
-    PlaceRatingResume toApiModel(final PlaceRatingResumeDto placeRatingResumeDto);
+    PlaceRatingResume toApiModel(final ResumePlaceRatingDto placeRatingResumeDto);
 }
