@@ -1,0 +1,5 @@
+# RabbitMQ
+docker-compose -f docker-compose-rabbitmq.yml up -d
+
+# MongoDB
+docker-compose -f docker-compose-mongodb.yml up -d
