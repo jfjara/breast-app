@@ -1,0 +1,62 @@
+openapi: 3.0.0
+info:
+  description: Rating API Service Specification for Breast Application
+  version: 0.0.1-SNAPSHOT
+  title: Rating API Service Specification for Breast Application
+  x-audience: company-internal
+  contact: {}
+servers:
+  - url: 'http://localhost:8080/api'
+    description: Local
+paths:
+  '/ratings/resume/{id}':
+    get:
+      summary: Returns a rating resume
+      description: Returns a rating resume
+      operationId: getRatingResume
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaceRatingResume'
+      tags:
+        - Rating
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Rating id
+components:
+  schemas:
+    PlaceRatingResume:
+      type: object
+      properties:
+        placeId:
+          type: string
+        mostPopularComment:
+          $ref: '#/components/schemas/PlaceComment'
+        globalRating:
+          type: string
+    PlaceComment:
+      type: object
+      properties:
+        id:
+          type: string
+        placeId:
+          type: string
+        ratingId:
+          type: string
+        comment:
+          type: string
+        likes:
+          type: integer
+        dislikes:
+          type: integer
+tags:
+  - name: Rating
