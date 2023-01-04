@@ -18,7 +18,27 @@
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<org.projectlombok.lombok>1.18.24</org.projectlombok.lombok>
 		<spring.ampqp.version>2.4.7</spring.ampqp.version>
+
+		<jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
+		<jasypt-maven-plugin.version>3.0.4</jasypt-maven-plugin.version>
+		<jasypt-spring-boot-starter.version>3.0.4</jasypt-spring-boot-starter.version>
+		<java.version>11</java.version>
+		<junit.version>5.8.2</junit.version>
+		<keycloak-adapter-bom.version>18.0.0</keycloak-adapter-bom.version>
+		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+		<lombok.version>1.18.24</lombok.version>
+		<mapstruct.version>1.4.2.Final</mapstruct.version>
+		<openapi-generator-maven-plugin.version>5.4.0</openapi-generator-maven-plugin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<spring-boot-starter-data-mongodb.version>2.6.7</spring-boot-starter-data-mongodb.version>
+		<springdoc-openapi-ui.version>1.6.8</springdoc-openapi-ui.version>
+		<swagger-annotations.version>2.2.0</swagger-annotations.version>
+		<swagger-parser.version>2.0.32</swagger-parser.version>
+		<validation-api.version>2.0.1.Final</validation-api.version>
+		<maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
 	</properties>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -92,10 +112,91 @@
 			<version>${org.mapstruct.version}</version>
 		</dependency>
 
+<!--		Open API-->
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-webflux-ui</artifactId>
+			<version>1.6.14</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>openapi-generator-maven-plugin</artifactId>
+			<version>${openapi-generator-maven-plugin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>${jackson-databind-nullable.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger-annotations.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-models</artifactId>
+			<version>${swagger-annotations.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.swagger.parser.v3</groupId>
+			<artifactId>swagger-parser</artifactId>
+			<version>${swagger-parser.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${validation-api.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
 		<plugins>
+
+			<plugin>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>
+								${project.basedir}/src/main/resources/rating-api.yml
+							</inputSpec>
+							<generatorName>spring</generatorName>
+							<apiPackage>com.breastapp.breastappratingservice.api</apiPackage>
+							<modelPackage>com.breastapp.breastappratingservice.api.model</modelPackage>
+							<generateApiTests>false</generateApiTests>
+							<generateModelTests>false</generateModelTests>
+							<modelNameSuffix>Dto</modelNameSuffix>
+							<skipIfSpecIsUnchanged>true</skipIfSpecIsUnchanged>
+							<configOptions>
+								<library>spring-boot</library>
+								<reactive>true</reactive>
+								<interfaceOnly>true</interfaceOnly>
+								<useBeanValidation>true</useBeanValidation>
+								<useTags>true</useTags>
+								<booleanGetterPrefix>is</booleanGetterPrefix>
+								<basePackage>${project.groupId}</basePackage>
+								<configPackage>${project.groupId}.application.config</configPackage>
+								<delegatePattern>true</delegatePattern>
+							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -106,8 +207,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.10.1</version>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
+					<source>14</source>
+					<target>14</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
