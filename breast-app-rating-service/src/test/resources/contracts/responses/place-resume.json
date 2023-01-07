@@ -1,0 +1,12 @@
+{
+  "placeId": "aaabbbccc",
+  "mostPopularComment": {
+    "id": null,
+    "placeId": null,
+    "ratingId": null,
+    "comment": null,
+    "likes": 0,
+    "dislikes": 0
+  },
+  "globalRating": 0.0
+}

@@ -1,5 +1,6 @@
-package com.breastapp.breastappratingservice.application.usecase;
+package com.breastapp.breastappratingservice.unitary.application.usecase;
 
+import com.breastapp.breastappratingservice.application.usecase.AddFeedbackToCommentForPlaceUseCaseImpl;
 import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
 import com.breastapp.breastappratingservice.domain.model.exceptions.FeedbackNotReportedException;
 import com.breastapp.breastappratingservice.domain.repository.SendFeedbackRepository;

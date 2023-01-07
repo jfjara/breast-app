@@ -1,6 +1,7 @@
-package com.breastapp.breastappratingservice.application.usecase;
+package com.breastapp.breastappratingservice.unitary.application.usecase;
 
 import com.breastapp.breastappratingservice.MockUtils;
+import com.breastapp.breastappratingservice.application.usecase.CreateRatingForPlaceUseCaseImpl;
 import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotStoredException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import org.junit.jupiter.api.Assertions;

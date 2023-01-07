@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 public class UseCaseConfig {
@@ -15,6 +16,7 @@ public class UseCaseConfig {
     private static final Logger logger = LoggerFactory.getLogger(UseCaseConfig.class);
 
     @Bean("GetGlobalRatingByPlaceIdUseCaseImpl")
+    @Primary
     public GetGlobalRatingByPlaceIdUseCase getCompleteRatingByPlaceIdUseCase(
             final RatingMongoDbRepository ratingRepository) {
         logger.info("Create bean for usecase GetGlobalRatingByPlaceIdUseCaseImpl");
@@ -22,6 +24,7 @@ public class UseCaseConfig {
     }
 
     @Bean("GetResumeRatingByPlaceIdUseCaseImpl")
+    @Primary
     public GetResumeRatingByPlaceIdUseCase getResumeRatingByPlaceIdUseCase(
             final RatingMongoDbRepository ratingRepository) {
         logger.info("Create bean for usecase GetResumeRatingByPlaceIdUseCaseImpl");
@@ -29,6 +32,7 @@ public class UseCaseConfig {
     }
 
     @Bean("CreateRatingForPlaceUseCaseImpl")
+    @Primary
     public CreateRatingForPlaceUseCase createRatingForPlaceUseCase(
             final RatingMongoDbRepository ratingRepository) {
         logger.info("Create bean for usecase CreateRatingForPlaceUseCaseImpl");
@@ -36,6 +40,7 @@ public class UseCaseConfig {
     }
 
     @Bean("AddFeedbackToCommentForPlaceUseCaseImpl")
+    @Primary
     public AddFeedbackToCommentForPlaceUseCase addFeedbackToCommentForPlaceUseCase(
             final SendFeedbackRabbitMQRepository sendInteractionRabbitMQRepository) {
         logger.info("Create bean for usecase AddFeedbackToCommentForPlaceUseCaseImpl");
@@ -43,6 +48,7 @@ public class UseCaseConfig {
     }
 
     @Bean("UpdateFeedbackRatingUseCaseImpl")
+    @Primary
     public UpdateFeedbackRatingUseCase updateInteractionUseCase(final RatingMongoDbRepository repository) {
         logger.info("Create bean for usecase UpdateFeedbackRatingUseCaseImpl");
         return new UpdateFeedbackRatingUseCaseImpl(repository);

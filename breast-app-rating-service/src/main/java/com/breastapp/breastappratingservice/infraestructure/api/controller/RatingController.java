@@ -52,47 +52,45 @@ public class RatingController {
     private PlaceRatingMapper placeRatingMapper;
 
     @GetMapping(value = "/ratings/resume/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<PlaceRatingResume> getPlaceResume(@PathVariable final String id) {
+    public ResponseEntity<PlaceRatingResume> getPlaceResume(@PathVariable final String id) {
         logger.info("GET /ratings/resume/{}", id);
-        return Mono.just(
-                placeRatingResumeMapper.toApiModel(
-                        getResumeRatingByPlaceIdUseCase.execute(id)
-                )
-        );
+        var placeRatingResumeDto = getResumeRatingByPlaceIdUseCase.execute(id);
+        var placeRatingResume = placeRatingResumeMapper.toApiModel(placeRatingResumeDto);
+        return new ResponseEntity<>(placeRatingResume, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/ratings/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Mono<PlaceRatingGlobal> getCompleteRating(@PathVariable final String id) {
-        logger.info("GET /ratings/{}", id);
-        return Mono.just(
-                placeRatingGlobalMapper.toApiModel(
-                        getGlobalRatingByPlaceIdUseCase.execute(id)
-                )
-        );
-    }
-
-    @PostMapping(value = "/ratings", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> createRating(@RequestBody final PlaceRating placeRating) {
-        logger.info("POST /ratings {}", placeRating.toString());
-        var placeRatingDto = placeRatingMapper.toDtoModel(placeRating);
-        createRatingForPlaceUseCase.execute(placeRatingDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @PutMapping(value = "/ratings/{ratingId}/place/{placeId}/like")
-    public ResponseEntity<HttpStatus> like(
-            @PathVariable final String ratingId,
-            @PathVariable final String placeId) {
-        addFeedbackToCommentForPlaceUseCase.execute(placeId, ratingId, FeedbackDto.LIKE);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
-
-    @PutMapping(value = "/ratings/{ratingId}/place/{placeId}/dislike")
-    public ResponseEntity<HttpStatus> dislike(
-            @PathVariable final String ratingId,
-            @PathVariable final String placeId) {
-        addFeedbackToCommentForPlaceUseCase.execute(placeId, ratingId, FeedbackDto.DISLIKE);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
-    }
+//    @GetMapping(value = "/ratings/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public Mono<PlaceRatingGlobal> getCompleteRating(@PathVariable final String id) {
+//        logger.info("GET /ratings/{}", id);
+//        return Mono.just(
+//                placeRatingGlobalMapper.toApiModel(
+//                        getGlobalRatingByPlaceIdUseCase.execute(id)
+//                )
+//        );
+//    }
+//
+//    @PostMapping(value = "/ratings", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<HttpStatus> createRating(@RequestBody final PlaceRating placeRating) {
+//        logger.info("POST /ratings {}", placeRating.toString());
+//        var placeRatingDto = placeRatingMapper.toDtoModel(placeRating);
+//        createRatingForPlaceUseCase.execute(placeRatingDto);
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+//    }
+//
+//    @PutMapping(value = "/ratings/{ratingId}/place/{placeId}/like")
+//    public ResponseEntity<HttpStatus> like(
+//            @PathVariable final String ratingId,
+//            @PathVariable final String placeId) {
+//        addFeedbackToCommentForPlaceUseCase.execute(placeId, ratingId, FeedbackDto.LIKE);
+//        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+//    }
+//
+//    @PutMapping(value = "/ratings/{ratingId}/place/{placeId}/dislike")
+//    public ResponseEntity<HttpStatus> dislike(
+//            @PathVariable final String ratingId,
+//            @PathVariable final String placeId) {
+//        addFeedbackToCommentForPlaceUseCase.execute(placeId, ratingId, FeedbackDto.DISLIKE);
+//        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+//    }
 
 }

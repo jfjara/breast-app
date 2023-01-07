@@ -1,6 +1,7 @@
-package com.breastapp.breastappratingservice.application.usecase;
+package com.breastapp.breastappratingservice.unitary.application.usecase;
 
 import com.breastapp.breastappratingservice.MockUtils;
+import com.breastapp.breastappratingservice.application.usecase.GetGlobalRatingByPlaceIdUseCaseImpl;
 import com.breastapp.breastappratingservice.domain.model.dto.GlobalPlaceRatingDto;
 import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotFoundException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
@@ -13,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class GetCompleteRatingByPlaceIdUseCaseImplTest {
@@ -25,12 +27,14 @@ public class GetCompleteRatingByPlaceIdUseCaseImplTest {
 
     @Test
     public void get_complete_rating_test() {
+        var placeId = UUID.randomUUID().toString();
         Mockito.when(ratingRepository.getGlobalPlaceRatingByPlaceId(Mockito.anyString()))
-                .thenReturn(MockUtils.getRatingByPlaceId("id"));
+                .thenReturn(MockUtils.getRatingByPlaceId(placeId));
 
-        var result = getCompleteRatingByPlaceIdUseCase.execute("id");
+        var result = getCompleteRatingByPlaceIdUseCase.execute(placeId);
 
         Assertions.assertNotNull(result);
+        Assertions.assertEquals(placeId, result.getPlaceId());
     }
 
     @Test
@@ -39,7 +43,7 @@ public class GetCompleteRatingByPlaceIdUseCaseImplTest {
                 .thenReturn(Optional.empty());
 
         var exception = Assertions.assertThrows(RatingPlaceNotFoundException.class,
-                () -> getCompleteRatingByPlaceIdUseCase.execute("id"));
+                () -> getCompleteRatingByPlaceIdUseCase.execute(UUID.randomUUID().toString()));
 
         Assertions.assertNotNull(exception);
     }

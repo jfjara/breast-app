@@ -1,5 +1,6 @@
-package com.breastapp.breastappratingservice.application.usecase;
+package com.breastapp.breastappratingservice.unitary.application.usecase;
 
+import com.breastapp.breastappratingservice.application.usecase.UpdateFeedbackRatingUseCaseImpl;
 import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
 import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotFoundException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;

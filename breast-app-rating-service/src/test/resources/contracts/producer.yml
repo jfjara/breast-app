@@ -1,0 +1,10 @@
+description: Get place rating resume
+name: Get rating resume
+request:
+  method: GET
+  url: /ratings/resume/aaabbbccc
+response:
+  status: 200
+  headers:
+    Content-Type: application/json
+  bodyFromFile: responses/place-resume.json

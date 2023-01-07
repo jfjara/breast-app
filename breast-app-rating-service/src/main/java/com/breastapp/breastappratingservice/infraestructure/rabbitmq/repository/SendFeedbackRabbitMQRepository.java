@@ -6,9 +6,11 @@ import com.breastapp.breastappratingservice.domain.repository.SendFeedbackReposi
 import com.breastapp.breastappratingservice.infraestructure.rabbitmq.mapper.FeedbackRatingOrderMapper;
 import com.breastapp.breastappratingservice.infraestructure.rabbitmq.producer.definition.FeedbackRatingProducer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
+@Primary
 public class SendFeedbackRabbitMQRepository implements SendFeedbackRepository {
 
     @Autowired

@@ -1,17 +1,14 @@
 package com.breastapp.breastappratingservice.infraestructure.rabbitmq.model;
 
 import com.breastapp.breastappratingservice.domain.model.dto.FeedbackDto;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+
 @ToString
+@Builder(toBuilder = true)
+@Getter
 public class RatingPlaceFeedbackOrder implements Serializable {
 
     private String placeId;

@@ -1,6 +1,7 @@
-package com.breastapp.breastappratingservice.application.usecase;
+package com.breastapp.breastappratingservice.unitary.application.usecase;
 
 import com.breastapp.breastappratingservice.MockUtils;
+import com.breastapp.breastappratingservice.application.usecase.GetResumeRatingByPlaceIdUseCaseImpl;
 import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotFoundException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import org.junit.jupiter.api.Assertions;
@@ -16,6 +17,8 @@ import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class GetResumeRatingByPlaceIdUseCaseImplTest {
+
+    public static final int ZERO_VALUE = 0;
 
     @Mock
     private RatingRepository ratingRepository;
@@ -33,8 +36,8 @@ public class GetResumeRatingByPlaceIdUseCaseImplTest {
         Assertions.assertNotNull(result);
         Assertions.assertNotNull(result.getMostPopularComment());
         Assertions.assertNull(result.getMostPopularComment().getComment());
-        Assertions.assertEquals(0, result.getMostPopularComment().getLikes());
-        Assertions.assertEquals(0, result.getMostPopularComment().getDislikes());
+        Assertions.assertEquals(ZERO_VALUE, result.getMostPopularComment().getLikes());
+        Assertions.assertEquals(ZERO_VALUE, result.getMostPopularComment().getDislikes());
     }
 
     @Test
@@ -47,7 +50,7 @@ public class GetResumeRatingByPlaceIdUseCaseImplTest {
         Assertions.assertNotNull(result);
         Assertions.assertNotNull(result.getMostPopularComment());
         Assertions.assertNotNull(result.getMostPopularComment().getComment());
-        Assertions.assertNotEquals(0, result.getGlobalRating());
+        Assertions.assertNotEquals(ZERO_VALUE, result.getGlobalRating());
     }
 
     @Test

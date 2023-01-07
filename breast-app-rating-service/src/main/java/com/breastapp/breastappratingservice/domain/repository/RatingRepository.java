@@ -15,6 +15,7 @@ public interface RatingRepository {
     void save(final PlaceRatingDto placeRatingDto) throws RatingPlaceNotStoredException;
     void updateRatingFeedbackByRatingIdAndPlaceId(final String placeId,
                                                   final String ratingId,
-                                                  final FeedbackDto type) throws RatingPlaceNotFoundException;
+                                                  final FeedbackDto type)
+            throws RatingPlaceNotFoundException, RatingPlaceNotStoredException;
 
 }
