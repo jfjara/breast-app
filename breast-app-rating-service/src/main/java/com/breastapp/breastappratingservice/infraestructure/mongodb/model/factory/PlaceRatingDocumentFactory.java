@@ -5,13 +5,14 @@ import com.breastapp.breastappratingservice.infraestructure.mongodb.model.PlaceR
 
 public class PlaceRatingDocumentFactory {
 
-    public static void updatePlaceRatingFeedback(
+    public static PlaceRatingDocument updatePlaceRatingFeedback(
             PlaceRatingDocument placeRatingDocument,
             final FeedbackDto feedback) {
         switch (feedback) {
             case LIKE -> placeRatingDocument.addLike();
             case DISLIKE -> placeRatingDocument.addDislike();
         }
+        return placeRatingDocument;
     }
 
 }

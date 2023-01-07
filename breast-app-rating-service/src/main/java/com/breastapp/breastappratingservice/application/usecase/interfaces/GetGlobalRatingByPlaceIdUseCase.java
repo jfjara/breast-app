@@ -1,9 +1,9 @@
 package com.breastapp.breastappratingservice.application.usecase.interfaces;
 
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
+import com.breastapp.breastappratingservice.domain.model.dto.GlobalPlaceRatingDto;
 
 public interface GetGlobalRatingByPlaceIdUseCase {
 
-    PlaceRatingGlobalDto execute(final String id);
+    GlobalPlaceRatingDto execute(final String id);
 
 }

@@ -3,8 +3,8 @@ package com.breastapp.breastappratingservice.application.usecase;
 import com.breastapp.breastappratingservice.application.usecase.interfaces.GetResumeRatingByPlaceIdUseCase;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceCommentDto;
 import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingDto;
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingGlobalDto;
-import com.breastapp.breastappratingservice.domain.model.dto.PlaceRatingResumeDto;
+import com.breastapp.breastappratingservice.domain.model.dto.GlobalPlaceRatingDto;
+import com.breastapp.breastappratingservice.domain.model.dto.ResumePlaceRatingDto;
 import com.breastapp.breastappratingservice.domain.model.exceptions.RatingPlaceNotFoundException;
 import com.breastapp.breastappratingservice.domain.repository.RatingRepository;
 import org.slf4j.Logger;
@@ -15,21 +15,21 @@ public class GetResumeRatingByPlaceIdUseCaseImpl implements GetResumeRatingByPla
     private static final Logger logger = LoggerFactory.getLogger(GetResumeRatingByPlaceIdUseCaseImpl.class);
     private final RatingRepository ratingRepository;
 
-    public GetResumeRatingByPlaceIdUseCaseImpl(RatingRepository ratingRepository) {
+    public GetResumeRatingByPlaceIdUseCaseImpl(final RatingRepository ratingRepository) {
         this.ratingRepository = ratingRepository;
     }
 
     @Override
-    public PlaceRatingResumeDto execute(final String placeId) {
+    public ResumePlaceRatingDto execute(final String placeId) {
         logger.info("Retrieve a resume rating for place id {}", placeId);
-        var globalRating = ratingRepository.getGlobalRatingByPlaceId(placeId);
+        var globalRating = ratingRepository.getGlobalPlaceRatingByPlaceId(placeId);
         return globalRating.map(this::createResume)
                 .orElseThrow(() ->
                         new RatingPlaceNotFoundException(placeId));
     }
 
-    private PlaceRatingResumeDto createResume(final PlaceRatingGlobalDto rating) {
-        return PlaceRatingResumeDto.builder()
+    private ResumePlaceRatingDto createResume(final GlobalPlaceRatingDto rating) {
+        return ResumePlaceRatingDto.builder()
                 .globalRating(rating.getRating())
                 .placeId(rating.getPlaceId())
                 .mostPopularComment(

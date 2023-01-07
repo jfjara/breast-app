@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RatingsMongoDbClientRepository extends MongoRepository<PlaceRatingDocument, String> {
 
@@ -14,6 +15,6 @@ public interface RatingsMongoDbClientRepository extends MongoRepository<PlaceRat
     List<PlaceRatingDocument> findItemByPlaceId(final String placeId);
 
     @Query("{placeId:'?0', id:'?1'}")
-    PlaceRatingDocument findItemByPlaceIdAndRatingId(final String placeId, final String ratingId);
+    Optional<PlaceRatingDocument> findItemByPlaceIdAndRatingId(final String placeId, final String ratingId);
 
 }
