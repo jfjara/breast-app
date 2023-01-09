@@ -32,6 +32,29 @@ paths:
         in: path
         required: true
         description: Rating id
+  '/ratings/{id}':
+    get:
+      summary: Returns a rating global
+      description: Returns a rating global
+      operationId: getRatingGlobal
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlaceRatingGlobal'
+      tags:
+        - Rating
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+        description: Rating id
 components:
   schemas:
     PlaceRatingResume:
@@ -58,5 +81,28 @@ components:
           type: integer
         dislikes:
           type: integer
+    PlaceRatingGlobal:
+      type: object
+      properties:
+        rating:
+          format: double
+          type: number
+        ratings:
+          $ref: '#/components/schemas/PlaceRating'
+    PlaceRating:
+      title: PlaceRating
+      x-stoplight:
+        id: 5b6e8e96338b8
+      type: object
+      properties:
+        id:
+          type: string
+        placeId:
+          type: string
+        rating:
+          type: number
+          format: double
+        placeComment:
+          $ref: '#/components/schemas/PlaceComment'
 tags:
   - name: Rating
